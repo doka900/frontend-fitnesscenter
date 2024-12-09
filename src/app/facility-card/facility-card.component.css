@@ -1,0 +1,149 @@
+.facility-card {
+    background-color: #2d3436; 
+    border: 2px solid #f05454; 
+    border-radius: 10px; 
+    padding: 20px; 
+    text-align: center; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    color: #ffffff; 
+    width: 100%; 
+    max-width: 350px; 
+    min-height: 55vh; 
+    margin: 15px auto; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+}
+
+
+
+
+.button-container {
+    margin-top: auto; 
+    text-align: center; 
+}
+
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px; 
+    background-color: #f05454; 
+    color: white; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    text-decoration: none; 
+    transition: background-color 0.3s ease; 
+}
+
+.btn:hover {
+    background-color: #ff7675; 
+}
+
+
+
+
+.facility-image {
+    width: 100%; 
+    height: 200px; 
+    object-fit: cover; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+.facility-image:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); 
+}
+
+
+.video-modal {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0; 
+    background-color: rgba(0, 0, 0, 0.8); 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    z-index: 1000; 
+    height: 600;
+    width: 800;
+}
+
+
+.video-container {
+    position: relative; 
+    width: 90%; 
+    max-width: 800px; 
+    height: 500px; 
+    border-radius: 10px; 
+    overflow: hidden; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); 
+}
+
+
+.facility-video {
+    width: 100%; 
+    height: 100%; 
+    border-radius: 10px; 
+}
+
+
+
+.close-button {
+    position: absolute; 
+    top: 10px; 
+    right: 10px; 
+    background-color: #f05454; 
+    color: #ffffff; 
+    border: none; 
+    font-size: 1.5rem; 
+    font-weight: bold; 
+    cursor: pointer; 
+    border-radius: 50%; 
+    width: 35px; 
+    height: 35px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    transition: background-color 0.3s ease; 
+}
+
+
+.btn:hover {
+    background-color: #ff7675; 
+}
+
+
+.close-button:hover {
+    background-color: #ff7675; 
+}
+
+
+@media (max-width: 768px) {
+    .facility-card {
+        max-width: 100%; 
+    }
+
+    .facility-image {
+        height: 180px; 
+    }
+
+    .video-container {
+        width: 100%; 
+    }
+}
+
+@media (max-width: 480px) {
+    .facility-type {
+        font-size: 1.2rem; 
+    }
+
+    .facility-location {
+        font-size: 0.9rem; 
+    }
+}

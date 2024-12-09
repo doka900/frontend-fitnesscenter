@@ -1,0 +1,23 @@
+<div class="trainers-container">
+    <h2>Upravljanje ulogama korisnika</h2>
+    
+
+    <div class="dropdown">
+      <button class="btn btn-primary" (click)="togglePromoteDropdown()">Odaberi korisnika kog želite da pretvorite u trenera</button>
+      <ul class="dropdown-menu" [class.show]="isPromoteDropdownOpen">
+        <li *ngFor="let user of users">
+          <a href="javascript:void(0)" (click)="promoteToTrainer(user.username)">{{user.username}}, {{ user.name }} {{ user.surname }}</a>
+        </li>
+      </ul>
+    </div>
+  
+    <div class="dropdown">
+      <button class="btn btn-danger" (click)="toggleDemoteDropdown()">Odaberi trenera kog želite da pretvorite u korisnika</button>
+      <ul class="dropdown-menu" [class.show]="isDemoteDropdownOpen">
+        <li *ngFor="let trainer of trainers">
+          <a href="javascript:void(0)" (click)="demoteToUser(trainer.username)">{{trainer.username}}, {{ trainer.name }} {{ trainer.surname }}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  

@@ -1,0 +1,31 @@
+<div class="login-container">
+    <h2>Prijava</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="username">Korisničko ime</label>
+            <input id="username" formControlName="username" type="text" required />
+            <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+                <small style="color: red;" *ngIf="loginForm.get('username')?.errors?.['required']">Korisničko ime je obavezno.</small>
+                <small style="color: red;" *ngIf="loginForm.get('username')?.errors?.['pattern']">Nedozvoljeni karakteri u korisničkom imenu.</small>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="password">Lozinka</label>
+            <input id="password" formControlName="password" type="password" required />
+            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                <small style="color: red;" *ngIf="loginForm.get('password')?.errors?.['required']">Lozinka je obavezna.</small>
+                <small style="color: red;" *ngIf="loginForm.get('password')?.errors?.['pattern']">Nedozvoljeni karakteri u lozinci.</small>
+            </div>
+        </div>
+
+        <div>Nemate nalog? 
+        <a href="/sign-up">Kliknite ovde!</a></div>
+
+        <button type="submit" class="btn-submit" [disabled]="loginForm.invalid">Prijava</button>
+    </form>
+
+    <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+    </div>
+</div>

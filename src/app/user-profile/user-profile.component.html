@@ -1,0 +1,118 @@
+<div class="container">
+  <h2>Korisnički profil</h2>
+
+  <div class="text-center mb-4">
+    <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Profilna slika" class="img-thumbnail" style="width: 150px; height: 150px;" />
+    <p *ngIf="!profileImageUrl">Profilna slika nije dostupna.</p>
+  </div>
+
+  <form [formGroup]="userForm" (ngSubmit)="saveUserProfile()">
+    <div class="form-group">
+      <label for="username">Korisničko ime:</label>
+      <input id="username" type="text" formControlName="username" class="form-control" readonly />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input id="email" type="email" formControlName="email" class="form-control" placeholder="Unesite svoju email adresu" />
+      <div *ngIf="userForm.get('email')?.touched">
+        <small style="color: red;" *ngIf="userForm.get('email')?.errors?.['required']">Email je obavezan.</small>
+        <small style="color: red;" *ngIf="userForm.get('email')?.errors?.['pattern']">Nevažeći format email-a.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="name">Ime:</label>
+      <input id="name" type="text" formControlName="name" class="form-control" placeholder="Unesite svoje ime" />
+      <div *ngIf="userForm.get('name')?.touched">
+        <small style="color: red;" *ngIf="userForm.get('name')?.errors?.['required']">Ime je obavezno.</small>
+        <small style="color: red;" *ngIf="userForm.get('name')?.errors?.['pattern']">Nevažeći karakteri u imenu.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="surname">Prezime:</label>
+      <input id="surname" type="text" formControlName="surname" class="form-control" placeholder="Unesite svoje prezime" />
+      <div *ngIf="userForm.get('surname')?.touched">
+        <small style="color: red;" *ngIf="userForm.get('surname')?.errors?.['required']">Prezime je obavezno.</small>
+        <small style="color: red;" *ngIf="userForm.get('surname')?.errors?.['pattern']">Nevažeći karakteri u prezimenu.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="dateOfBirth">Datum rođenja:</label>
+      <input id="dateOfBirth" type="date" formControlName="dateOfBirth" class="form-control" />
+      <div *ngIf="userForm.get('dateOfBirth')?.touched">
+        <small style="color: red;" *ngIf="userForm.get('dateOfBirth')?.errors?.['required']">Datum rođenja je obavezan.</small>
+        <small style="color: red;" *ngIf="userForm.get('dateOfBirth')?.errors?.['tooYoung']">Morate imati najmanje 13 godina.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="displayName">Prikazano ime:</label>
+      <input id="displayName" type="text" formControlName="displayName" class="form-control" placeholder="Unesite svoje prikazano ime" />
+      <div *ngIf="userForm.get('displayName')?.touched">
+        <small style="color: red;" *ngIf="userForm.get('displayName')?.errors?.['required']">Prikazano ime je obavezno.</small>
+        <small style="color: red;" *ngIf="userForm.get('displayName')?.errors?.['pattern']">Nevažeći karakteri u prikazanom imenu.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Opis:</label>
+      <textarea id="description" formControlName="description" class="form-control" placeholder="Recite nam nešto o sebi"></textarea>
+      <div *ngIf="userForm.get('description')?.touched">
+        <small style="color: red;" *ngIf="userForm.get('description')?.errors?.['pattern']">Nevažeći karakteri u opisu.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="role">Uloga:</label>
+      <input id="role" type="text" formControlName="role" class="form-control" readonly />
+    </div>
+
+    <div class="form-group">
+      <label for="profileImage">Profilna slika:</label>
+      <input type="file" (change)="onFileSelected($event)" id="profileImage" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Ažuriraj profil</button>
+  </form>
+
+  <hr />
+
+  <h2>Promena lozinke</h2>
+  <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+    <div class="form-group">
+      <label for="oldPassword">Stara lozinka:</label>
+      <input id="oldPassword" type="password" formControlName="oldPassword" class="form-control" placeholder="Unesite staru lozinku" />
+      <div *ngIf="passwordForm.get('oldPassword')?.touched">
+        <small style="color: red;" *ngIf="passwordForm.get('oldPassword')?.errors?.['required']">Stara lozinka je obavezna.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="newPassword">Nova lozinka:</label>
+      <input id="newPassword" type="password" formControlName="newPassword" class="form-control" placeholder="Unesite novu lozinku" />
+      <div *ngIf="passwordForm.get('newPassword')?.touched">
+        <small style="color: red;" *ngIf="passwordForm.get('newPassword')?.errors?.['required']">Nova lozinka je obavezna.</small>
+        <small style="color: red;" *ngIf="passwordForm.get('newPassword')?.errors?.['minlength']">Nova lozinka mora imati najmanje 8 karaktera.</small>
+        <small style="color: red;" *ngIf="passwordForm.get('newPassword')?.errors?.['pattern']">
+          Lozinka mora sadržati najmanje jedno veliko slovo, jedno malo slovo, jedan broj i jedan poseban karakter.
+        </small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="repeatNewPassword">Potvrdite novu lozinku:</label>
+      <input id="repeatNewPassword" type="password" formControlName="repeatNewPassword" class="form-control" placeholder="Potvrdite novu lozinku" />
+      <div *ngIf="passwordForm.get('repeatNewPassword')?.touched">
+        <small style="color: red;" *ngIf="passwordForm.get('repeatNewPassword')?.errors?.['required']">Molimo potvrdite novu lozinku.</small>
+        <small style="color: red;" *ngIf="passwordForm.get('repeatNewPassword')?.value !== passwordForm.get('newPassword')?.value">
+          Lozinke se ne poklapaju.
+        </small>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="passwordForm.invalid">Promeni lozinku</button>
+  </form>
+</div>

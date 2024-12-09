@@ -1,0 +1,8 @@
+<div class="container">
+    <h2>Naši objekti</h2>
+    <div class="row">
+        <div class="col-md-4" *ngFor="let facility of facilities">
+            <app-facility-card [facility]="facility"></app-facility-card> 
+        </div>
+    </div>
+</div>

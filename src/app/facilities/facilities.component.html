@@ -1,0 +1,227 @@
+<div class="container">
+  <h2 class="section-title">Kreiraj objekat</h2>
+  <form [formGroup]="facilityForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="country">Naziv</label>
+      <input type="text" id="name" formControlName="name" class="form-control" required>
+      <div *ngIf="facilityForm.get('country')?.invalid && facilityForm.get('country')?.touched">
+        <small style="color: red;" *ngIf="facilityForm.get('country')?.errors?.['required']">Naziv je obavezan.</small>
+        <small style="color: red;" *ngIf="facilityForm.get('country')?.errors?.['pattern']">Nedozvoljeni karakteri u nazivu.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="country">Država</label>
+      <input type="text" id="country" formControlName="country" class="form-control" required>
+      <div *ngIf="facilityForm.get('country')?.invalid && facilityForm.get('country')?.touched">
+        <small style="color: red;" *ngIf="facilityForm.get('country')?.errors?.['required']">Država je obavezna.</small>
+        <small style="color: red;" *ngIf="facilityForm.get('country')?.errors?.['pattern']">Nedozvoljeni karakteri u nazivu države.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="city">Grad</label>
+      <input type="text" id="city" formControlName="city" class="form-control" required>
+      <div *ngIf="facilityForm.get('city')?.invalid && facilityForm.get('city')?.touched">
+        <small style="color: red;" *ngIf="facilityForm.get('city')?.errors?.['required']">Grad je obavezan.</small>
+        <small style="color: red;" *ngIf="facilityForm.get('city')?.errors?.['pattern']">Nedozvoljeni karakteri u nazivu grada.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="zipCode">Poštanski broj</label>
+      <input type="text" id="zipCode" formControlName="zipCode" class="form-control" required>
+      <div *ngIf="facilityForm.get('zipCode')?.invalid && facilityForm.get('zipCode')?.touched">
+        <small style="color: red;" *ngIf="facilityForm.get('zipCode')?.errors?.['required']">Poštanski broj je obavezan.</small>
+        <small style="color: red;" *ngIf="facilityForm.get('zipCode')?.errors?.['pattern']">Nedozvoljeni karakteri u poštanskom broju.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="address">Adresa</label>
+      <input type="text" id="address" formControlName="address" class="form-control" required>
+      <div *ngIf="facilityForm.get('address')?.invalid && facilityForm.get('address')?.touched">
+        <small style="color: red;" *ngIf="facilityForm.get('address')?.errors?.['required']">Adresa je obavezna.</small>
+        <small style="color: red;" *ngIf="facilityForm.get('address')?.errors?.['pattern']">Nedozvoljeni karakteri u adresi.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="phoneNumber">Broj telefona</label>
+      <input type="text" id="phoneNumber" formControlName="phoneNumber" class="form-control" required>
+      <div *ngIf="facilityForm.get('phoneNumber')?.invalid && facilityForm.get('phoneNumber')?.touched">
+        <small style="color: red;" *ngIf="facilityForm.get('phoneNumber')?.errors?.['required']">Broj telefona je obavezan.</small>
+        <small style="color: red;" *ngIf="facilityForm.get('phoneNumber')?.errors?.['pattern']">Nedozvoljeni karakteri u broju telefona.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" formControlName="email" class="form-control" required>
+      <div *ngIf="facilityForm.get('email')?.invalid && facilityForm.get('email')?.touched">
+        <small style="color: red;" *ngIf="facilityForm.get('email')?.errors?.['required']">Email je obavezan.</small>
+        <small style="color: red;" *ngIf="facilityForm.get('email')?.errors?.['email']">Neispravan format email adrese.</small>
+        <small style="color: red;" *ngIf="facilityForm.get('email')?.errors?.['pattern']">Nedozvoljeni karakteri u email adresi.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="calendarLink">Video link</label>
+      <input type="text" id="calendarLink" formControlName="calendarLink" class="form-control">
+      <div *ngIf="facilityForm.get('calendarLink')?.invalid && facilityForm.get('calendarLink')?.touched">
+        <small style="color: red;" *ngIf="facilityForm.get('calendarLink')?.errors?.['pattern']">Nedozvoljeni karakteri u linku kalendara.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="facilityType">Tip objekta</label>
+      <select id="facilityType" formControlName="facilityType" class="form-control" required>
+        <option value="">Izaberi tip objekta</option>
+        <option *ngFor="let type of facilityTypes" [value]="type">{{ type }}</option>
+      </select>
+      <div *ngIf="facilityForm.get('facilityType')?.invalid && facilityForm.get('facilityType')?.touched">
+        <small style="color: red;" *ngIf="facilityForm.get('facilityType')?.errors?.['required']">Tip objekta je obavezan.</small>
+        <small style="color: red;" *ngIf="facilityForm.get('facilityType')?.errors?.['pattern']">Nedozvoljeni karakteri u tipu objekta.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="image">Slika objekta</label>
+      <input type="file" id="image" (change)="onFileSelected($event)" class="form-control">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Kreiraj objekat</button>
+  </form>
+
+  <div>
+  <h2 class="section-title mt-4">Objekti</h2>
+  <ul class="list-group">
+    <li *ngFor="let facility of facilities" class="list-group-item room-item">
+      <div class="facility-details">
+        <img *ngIf="facility.image" [src]="facility.image" alt="Slika Objekta" class="facility-image img-thumbnail mb-2" style="max-width: 150px;">
+        <div>
+          <strong>Naziv:</strong> {{ facility.name }}<br>
+          <strong>Grad:</strong> {{ facility.city }}<br>
+          <strong>Država:</strong> {{ facility.country }}<br>
+          <strong>Poštanski broj:</strong> {{ facility.zipCode }}<br>
+          <strong>Adresa:</strong> {{ facility.address }}<br>
+          <strong>Broj telefona:</strong> {{ facility.phoneNumber }}<br>
+          <strong>Email:</strong> {{ facility.email }}<br>
+          <strong>Video link:</strong> <a [href]="facility.calendarLink" target="_blank"> Kliknite ovde!</a><br>
+          <strong>Tip:</strong> {{ facility.facilityType }}<br>
+        </div>
+      </div>
+      <div class="room-actions">
+        <button (click)="editFacility(facility)" class="btn btn-warning btn-sm">Ažuriraj</button>
+        <button (click)="deleteFacility(facility.id)" class="btn btn-danger btn-sm">Obriši</button>
+        <button (click)="viewFacilitySpaces(facility.id)" class="btn btn-info btn-sm">Upravljaj prostorijama</button>
+      </div>
+    </li>
+  </ul>
+</div>
+<div *ngIf="editingFacilityId" class="modal show">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Ažuriraj Objekat</h2>
+      <button class="close" (click)="cancelEdit()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="updateForm" (ngSubmit)="onUpdate()">
+        <div class="form-group">
+          <label for="name">Naziv</label>
+          <input type="text" id="name" formControlName="name" class="form-control" required>
+          <div *ngIf="updateForm.get('name')?.invalid && updateForm.get('name')?.touched">
+            <small style="color: red;" *ngIf="updateForm.get('name')?.errors?.['required']">Naziv je obavezan.</small>
+            <small style="color: red;" *ngIf="updateForm.get('name')?.errors?.['pattern']">Nedozvoljeni karakteri u nazivu.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="city">Grad</label>
+          <input type="text" id="city" formControlName="city" class="form-control" required>
+          <div *ngIf="updateForm.get('city')?.invalid && updateForm.get('city')?.touched">
+            <small style="color: red;" *ngIf="updateForm.get('city')?.errors?.['required']">Grad je obavezan.</small>
+            <small style="color: red;" *ngIf="updateForm.get('city')?.errors?.['pattern']">Nedozvoljeni karakteri u nazivu grada.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="country">Država</label>
+          <input type="text" id="country" formControlName="country" class="form-control" required>
+          <div *ngIf="updateForm.get('country')?.invalid && updateForm.get('country')?.touched">
+            <small style="color: red;" *ngIf="updateForm.get('country')?.errors?.['required']">Država je obavezna.</small>
+            <small style="color: red;" *ngIf="updateForm.get('country')?.errors?.['pattern']">Nedozvoljeni karakteri u nazivu države.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="zipCode">Poštanski broj</label>
+          <input type="text" id="zipCode" formControlName="zipCode" class="form-control" required>
+          <div *ngIf="updateForm.get('zipCode')?.invalid && updateForm.get('zipCode')?.touched">
+            <small style="color: red;" *ngIf="updateForm.get('zipCode')?.errors?.['required']">Poštanski broj je obavezan.</small>
+            <small style="color: red;" *ngIf="updateForm.get('zipCode')?.errors?.['pattern']">Nedozvoljeni karakteri u poštanskom broju.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="address">Adresa</label>
+          <input type="text" id="address" formControlName="address" class="form-control" required>
+          <div *ngIf="updateForm.get('address')?.invalid && updateForm.get('address')?.touched">
+            <small style="color: red;" *ngIf="updateForm.get('address')?.errors?.['required']">Adresa je obavezna.</small>
+            <small style="color: red;" *ngIf="updateForm.get('address')?.errors?.['pattern']">Nedozvoljeni karakteri u adresi.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="phoneNumber">Broj telefona</label>
+          <input type="text" id="phoneNumber" formControlName="phoneNumber" class="form-control" required>
+          <div *ngIf="updateForm.get('phoneNumber')?.invalid && updateForm.get('phoneNumber')?.touched">
+            <small style="color: red;" *ngIf="updateForm.get('phoneNumber')?.errors?.['required']">Broj telefona je obavezan.</small>
+            <small style="color: red;" *ngIf="updateForm.get('phoneNumber')?.errors?.['pattern']">Nedozvoljeni karakteri u broju telefona.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" formControlName="email" class="form-control" required>
+          <div *ngIf="updateForm.get('email')?.invalid && updateForm.get('email')?.touched">
+            <small style="color: red;" *ngIf="updateForm.get('email')?.errors?.['required']">Email je obavezan.</small>
+            <small style="color: red;" *ngIf="updateForm.get('email')?.errors?.['email']">Neispravan format email adrese.</small>
+            <small style="color: red;" *ngIf="updateForm.get('email')?.errors?.['pattern']">Nedozvoljeni karakteri u email adresi.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="calendarLink">Video link</label>
+          <input type="text" id="calendarLink" formControlName="calendarLink" class="form-control">
+          <div *ngIf="updateForm.get('calendarLink')?.invalid && updateForm.get('calendarLink')?.touched">
+            <small style="color: red;" *ngIf="updateForm.get('calendarLink')?.errors?.['pattern']">Nedozvoljeni karakteri u linku kalendara.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="facilityType">Tip objekta</label>
+          <select id="facilityType" formControlName="facilityType" class="form-control" required>
+            <option value="">Izaberi tip objekta</option>
+            <option *ngFor="let type of facilityTypes" [value]="type">{{ type }}</option>
+          </select>
+          <div *ngIf="updateForm.get('facilityType')?.invalid && updateForm.get('facilityType')?.touched">
+            <small style="color: red;" *ngIf="updateForm.get('facilityType')?.errors?.['required']">Tip objekta je obavezan.</small>
+            <small style="color: red;" *ngIf="updateForm.get('facilityType')?.errors?.['pattern']">Nedozvoljeni karakteri u tipu objekta.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="image">Slika objekta</label>
+          <input type="file" id="image" (change)="onFileSelected($event)" class="form-control">
+          <img *ngIf="facilityImageUrl" [src]="facilityImageUrl" alt="Slika Objekta" class="img-thumbnail mt-2" style="max-width: 200px;">
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" [disabled]="!updateForm.valid">Ažuriraj objekat</button>
+          <button type="button" (click)="cancelEdit()" class="btn btn-secondary">Otkaži</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

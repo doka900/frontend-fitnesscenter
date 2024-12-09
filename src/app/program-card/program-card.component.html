@@ -1,0 +1,90 @@
+<div class="program-card">
+  <a [routerLink]="['/program', program.id]" class="program-image-link">
+    <img 
+      [src]="program.image ? program.image : defaultImage" 
+      alt="Slika Programa" 
+      class="program-image img-thumbnail mb-2"
+    >
+  </a>
+  
+  <div class="program-info">
+    <h3 class="program-name">{{ program.name }}</h3>
+    
+    <div class="program-description-container">
+      <p class="program-description">{{ program.description }}</p>
+    </div>
+
+    <p class="program-duration">Trajanje: {{ program.programDuration }}</p>
+    <p class="program-trainer" *ngIf="program.trainer">
+      Trener: {{ program.trainer.name }} {{ program.trainer.surname }}
+    </p>
+    
+    <p class="program-level">Nivo: {{ program.programLevel | titlecase }}</p>
+    <p class="program-price">{{ program.price | currency }}</p>
+    
+    <div class="button-container">
+      <button 
+        class="btn-start-program" 
+        (click)="startProgramAndSchedule()">
+        {{ isUserEnrolled ? 'Prikaži raspored' : 'Započni program i prikaži raspored' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal show" *ngIf="isModalOpen">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Izaberite termine za {{ program.name }}</h2>
+      <span class="close" (click)="toggleModal()">&times;</span>
+    </div>
+
+    <div class="modal-body">
+      <ul *ngIf="mainOccurrences.length > 0">
+        <li *ngFor="let mainOccurrence of mainOccurrences">
+          <div class="checkbox-container">
+            <input 
+              type="checkbox" 
+              id="checkbox-{{mainOccurrence.id}}"
+              class="custom-checkbox-input"
+              (change)="toggleEventSelection(mainOccurrence)" 
+              [checked]="mainOccurrence.selected"
+            >
+            <label for="checkbox-{{mainOccurrence.id}}" class="custom-checkbox-label">
+              <span class="custom-checkbox"></span>
+              <strong>{{ mainOccurrence.summary }}</strong> - 
+              <span>{{ mainOccurrence.startTime | date: 'mediumDate' }} u {{ mainOccurrence.startTime | date: 'shortTime' }}</span>
+              <br>
+              Lokacija: {{ mainOccurrence.location || 'Nije navedeno' }}
+            </label>
+          </div>
+
+          <div class="expand-section">
+            <button *ngIf="!mainOccurrence.showAll" class="expand-btn" (click)="mainOccurrence.showAll = true">
+              Prikaži sve termine
+            </button>
+            <button *ngIf="mainOccurrence.showAll" class="expand-btn" (click)="mainOccurrence.showAll = false">
+              Sakrij sve termine
+            </button>
+          </div>
+
+          <ul *ngIf="mainOccurrence.showAll" class="occurrences-list">
+            <li *ngFor="let occurrence of mainOccurrence.occurrences">
+              <strong>{{ occurrence.summary }}</strong> - 
+              <span>{{ occurrence.startTime | date: 'mediumDate' }} u {{ occurrence.startTime | date: 'shortTime' }}</span>
+              <br>
+              Lokacija: {{ occurrence.location || 'Nije navedeno' }}
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <ul *ngIf="mainOccurrences.length == 0">Trenutno nema termina.</ul>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="toggleModal()">Zatvori</button>
+      <button class="btn btn-primary" (click)="sendInvitesForSelectedEvents()">Zakaži termine</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,231 @@
+<div class="container">
+  <h2 class="section-title">Kreiraj Program</h2>
+  <form [formGroup]="programForm" (ngSubmit)="onSubmit()">
+    
+    <div class="form-group">
+      <label for="name">Naziv programa</label>
+      <input type="text" id="name" formControlName="name" class="form-control" required>
+      <div *ngIf="programForm.get('name')?.invalid && programForm.get('name')?.touched">
+        <small style="color: red;">Naziv programa je obavezan.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Opis</label>
+      <textarea id="description" formControlName="description" class="form-control" required></textarea>
+      <div *ngIf="programForm.get('description')?.invalid && programForm.get('description')?.touched">
+        <small style="color: red;">Opis je obavezan.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="price">Cena</label>
+      <input type="number" id="price" formControlName="price" class="form-control" required>
+      <div *ngIf="programForm.get('price')?.invalid && programForm.get('price')?.touched">
+        <small style="color: red;">Cena je obavezna.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="programDuration">Trajanje</label>
+      <select id="programDuration" formControlName="programDuration" class="form-control" required>
+        <option value="">Izaberite trajanje programa</option>
+        <option *ngFor="let duration of programDurations" [value]="duration">{{ duration }}</option>
+      </select>
+      <div *ngIf="programForm.get('programDuration')?.invalid && programForm.get('programDuration')?.touched">
+        <small style="color: red;">Trajanje programa je obavezno.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="programLevel">Nivo</label>
+      <select id="programLevel" formControlName="programLevel" class="form-control" required>
+        <option value="">Izaberite nivo programa</option>
+        <option *ngFor="let level of programLevels" [value]="level">{{ level }}</option>
+      </select>
+      <div *ngIf="programForm.get('programLevel')?.invalid && programForm.get('programLevel')?.touched">
+        <small style="color: red;">Nivo programa je obavezan.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="trainer">Trener</label>
+      <select id="trainer" formControlName="trainer" class="form-control" required>
+        <option value="">Izaberite trenera</option>
+        <option *ngFor="let trainer of trainers" [value]="trainer.id">{{ trainer.name }} {{ trainer.surname }}</option>
+      </select>
+      <div *ngIf="programForm.get('trainer')?.invalid && programForm.get('trainer')?.touched">
+        <small style="color: red;">Trener je obavezan.</small>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="image">Slika programa</label>
+      <input type="file" id="image" (change)="onFileSelected($event)" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="facility">Objekat</label>
+      <select id="facility" formControlName="facility" class="form-control" (change)="onFacilityChange($event)" required>
+        <option value="">Izaberite objekat</option>
+        <option *ngFor="let facility of facilities" [value]="facility.id">{{ facility.fullAddress }}</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="room">Prostorija</label>
+      <select id="room" formControlName="room" class="form-control" required>
+        <option value="">Izaberite prostoriju</option>
+        <option *ngFor="let room of rooms" [value]="room.id">{{ room.name }}</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Kreiraj program</button>
+  </form>
+  
+  <h2 class="section-title">Programi</h2>
+  <ul class="list-group">
+    <li *ngFor="let program of programs" class="list-group-item room-item">
+      <div class="facility-details">
+        <img *ngIf="program.image" [src]="program.image" alt="Slika Programa" class="facility-image img-thumbnail mb-2" style="max-width: 150px;">
+        <div>
+          <strong>Naziv: </strong> {{ program.name }}<br>
+          <strong>Opis: </strong> {{ program.description }}<br>
+          <strong>Cena: </strong> {{ program.price | currency }}<br>
+          <strong>Trajanje: </strong> {{ program.programDuration }}<br>
+          <strong>Nivo: </strong> {{ program.programLevel }}<br>
+          <strong>Trener: </strong>
+          <span *ngIf="program.trainer"> {{ program.trainer.name }} {{ program.trainer.surname }}</span>
+          <span *ngIf="!program.trainer">Nema dodeljenog trenera</span><br>
+          <strong>Lokacija:</strong>
+          <div *ngIf="program.facility && program.facility.facilitySpaces.length > 0">
+            <p>{{ program.facility.address }}, {{ program.facility.city }}, {{ program.facility.country }},  Prostorija: {{ program.facility.facilitySpaces[0].name }}</p>
+          </div>
+          <div *ngIf="!program.facility || program.facility.facilitySpaces.length === 0">
+            <p>Nema dostupnih informacija o lokaciji</p>
+          </div>
+  
+
+  
+          <button (click)="editProgram(program)" class="btn btn-warning btn-sm ml-2">Ažuriraj</button>
+          <button (click)="deleteProgram(program.id)" class="btn btn-danger btn-sm ml-2">Obriši</button>
+          <button (click)="openEventModal(program)" class="btn btn-primary btn-sm">Zakaži događaj</button>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<div class="modal show" tabindex="-1" role="dialog" *ngIf="selectedProgram">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Zakaži termin za {{ selectedProgram.name }}</h5>
+        <button type="button" class="close" (click)="closeModal()" aria-label="Zatvori">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="appointmentForm" (ngSubmit)="scheduleMeeting()">
+          <div class="form-group">
+            <label for="appointmentTime">Vreme održavanja termina</label>
+            <input type="datetime-local" id="appointmentTime" formControlName="appointmentTime" class="form-control">
+          </div>
+
+          <div class="form-group" *ngIf="rooms && rooms.length > 0">
+            <label for="room">Prostorija</label>
+            <select id="room" formControlName="room" class="form-control">
+              <option *ngFor="let room of rooms" [value]="room.name">{{ room.name }}</option>
+            </select>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Zatvori</button>
+        <button type="button" class="btn btn-primary" (click)="scheduleMeeting()">Zakaži termin</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="editingProgramId" class="modal show">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Ažuriraj program</h2>
+      <button type="button" class="close" (click)="cancelEdit()" aria-label="Zatvori">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <form [formGroup]="updateForm" (ngSubmit)="onUpdate()">
+      
+      <div class="form-group">
+        <label for="name">Naziv programa</label>
+        <input type="text" id="name" formControlName="name" class="form-control" required>
+        <div *ngIf="updateForm.get('name')?.invalid && updateForm.get('name')?.touched">
+          <small style="color: red;">Naziv programa je obavezan.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Opis</label>
+        <textarea id="description" formControlName="description" class="form-control" required></textarea>
+        <div *ngIf="updateForm.get('description')?.invalid && updateForm.get('description')?.touched">
+          <small style="color: red;">Opis je obavezan.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="price">Cena</label>
+        <input type="number" id="price" formControlName="price" class="form-control" required>
+        <div *ngIf="updateForm.get('price')?.invalid && updateForm.get('price')?.touched">
+          <small style="color: red;">Cena je obavezna.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="programDuration">Trajanje</label>
+        <select id="programDuration" formControlName="programDuration" class="form-control" required>
+          <option value="">Izaberite trajanje programa</option>
+          <option *ngFor="let duration of programDurations" [value]="duration">{{ duration }}</option>
+        </select>
+        <div *ngIf="updateForm.get('programDuration')?.invalid && updateForm.get('programDuration')?.touched">
+          <small style="color: red;">Trajanje programa je obavezno.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="programLevel">Nivo</label>
+        <select id="programLevel" formControlName="programLevel" class="form-control" required>
+          <option value="">Izaberite nivo programa</option>
+          <option *ngFor="let level of programLevels" [value]="level">{{ level }}</option>
+        </select>
+        <div *ngIf="updateForm.get('programLevel')?.invalid && updateForm.get('programLevel')?.touched">
+          <small style="color: red;">Nivo programa je obavezan.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="trainer">Trener</label>
+        <select id="trainer" formControlName="trainer" class="form-control" required>
+          <option value="">Izaberite trenera</option>
+          <option *ngFor="let trainer of trainers" [value]="trainer.id">{{ trainer.name }} {{ trainer.surname }}</option>
+        </select>
+        <div *ngIf="updateForm.get('trainer')?.invalid && updateForm.get('trainer')?.touched">
+          <small style="color: red;">Trener je obavezan.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="image">Slika programa</label>
+        <input type="file" id="image" (change)="onFileSelected($event)" class="form-control">
+        <img *ngIf="programImageUrl" [src]="programImageUrl" alt="Slika Programa" class="img-thumbnail mt-2" style="max-width: 200px;">
+      </div>
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Ažuriraj program</button>
+        <button type="button" (click)="cancelEdit()" class="btn btn-secondary">Otkaži</button>
+      </div>
+    </form>
+  </div>
+</div>

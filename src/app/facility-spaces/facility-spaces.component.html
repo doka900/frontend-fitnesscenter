@@ -1,0 +1,92 @@
+<div class="container">
+  <h2 class="section-title">Informacije o objekatu</h2>
+  <div *ngIf="facility" class="facility-info">
+    <img *ngIf="facility.image" [src]="facility.image" alt="Slika objekta" class="facility-image img-thumbnail mb-3" style="max-width: 200px;">
+    <div class="facility-details">
+      <p><strong>Naziv objekta:</strong> {{ facility.name }}</p>
+      <p><strong>Grad:</strong> {{ facility.city }}</p>
+      <p><strong>Država:</strong> {{ facility.country }}</p>
+      <p><strong>Poštanski broj:</strong> {{ facility.zipCode }}</p>
+      <p><strong>Adresa:</strong> {{ facility.address }}</p>
+      <p><strong>Broj telefona:</strong> {{ facility.phoneNumber }}</p>
+      <p><strong>Email:</strong> {{ facility.email }}</p>
+      <p><strong>Video:</strong> <a [href]="facility.calendarLink" target="_blank">{{ facility.calendarLink }}</a></p>
+      <p><strong>Tip:</strong> {{ facility.facilityType }}</p>
+    </div>
+  </div>
+
+  <h3 class="section-title mt-4">Prostorije u objektu</h3>
+  <button (click)="openAddRoomForm()" class="btn btn-primary mb-3">Dodaj prostoriju</button>
+  <div *ngIf="rooms && rooms.length > 0">
+    <ul class="list-group">
+      <li *ngFor="let room of rooms" class="list-group-item room-item">
+        <div class="room-details">
+          <img *ngIf="room.image" [src]="room.image" alt="Slika prostorije" class="room-image img-thumbnail mb-2" style="max-width: 150px;">
+          <div>
+            <strong>Naziv prostorije:</strong> {{ room.name }}<br>
+            <strong>Kapacitet:</strong> {{ room.capacity }}<br>
+            <strong>Tip:</strong> {{ room.type }}
+          </div>
+        </div>
+        <div class="room-actions">
+          <button (click)="openUpdateRoomForm(room)" class="btn btn-warning btn-sm">Ažuriraj prostoriju</button>
+          <button (click)="deleteRoom(room.id)" class="btn btn-danger btn-sm">Obriši prostoriju</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Modal za Dodavanje/Ažuriranje Prostorije -->
+  <div *ngIf="addingNewRoom || editingRoomId !== null" class="modal show">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>{{ editingRoomId ? 'Ažuriraj Prostoriju' : 'Dodaj Prostoriju' }}</h2>
+        <button class="close" (click)="closeRoomForm()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="roomForm" (ngSubmit)="onRoomSubmit()">
+          <div class="form-group">
+            <label for="roomName">Naziv prostorije</label>
+            <input type="text" id="roomName" formControlName="name" class="form-control" required />
+            <div *ngIf="roomForm.get('name')?.invalid && roomForm.get('name')?.touched">
+              <small style="color: red;" *ngIf="roomForm.get('name')?.errors?.['required']">Naziv prostorije je obavezan.</small>
+              <small style="color: red;" *ngIf="roomForm.get('name')?.errors?.['pattern']">Nedozvoljeni karakteri u nazivu prostorije.</small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="capacity">Kapacitet</label>
+            <input type="number" id="capacity" formControlName="capacity" class="form-control" required />
+            <div *ngIf="roomForm.get('capacity')?.invalid && roomForm.get('capacity')?.touched">
+              <small style="color: red;" *ngIf="roomForm.get('capacity')?.errors?.['required']">Kapacitet je obavezan.</small>
+              <small style="color: red;" *ngIf="roomForm.get('capacity')?.errors?.['min']">Kapacitet mora biti najmanje 1.</small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="facilitySpaceType">Tip prostorije</label>
+            <select id="facilitySpaceType" formControlName="facilitySpaceType" class="form-control" required>
+              <option value="">Izaberi tip prostorije</option>
+              <option *ngFor="let type of facilitySpaceTypes" [value]="type">{{ type }}</option>
+            </select>
+            <div *ngIf="roomForm.get('facilitySpaceType')?.invalid && roomForm.get('facilitySpaceType')?.touched">
+              <small style="color: red;" *ngIf="roomForm.get('facilitySpaceType')?.errors?.['required']">Tip prostorije je obavezan.</small>
+              <small style="color: red;" *ngIf="roomForm.get('facilitySpaceType')?.errors?.['pattern']">Nedozvoljeni karakteri u tipu prostorije.</small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="image">Slika prostorije</label>
+            <input type="file" id="image" (change)="onFileSelected($event)" class="form-control">
+            <img *ngIf="roomImageUrl" [src]="roomImageUrl" alt="Slika Prostorije" class="img-thumbnail mt-2" style="max-width: 200px;">
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" [disabled]="!roomForm.valid">{{ editingRoomId ? 'Ažuriraj prostoriju' : 'Dodaj prostoriju' }}</button>
+            <button type="button" (click)="closeRoomForm()" class="btn btn-secondary">Otkaži</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

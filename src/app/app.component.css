@@ -1,0 +1,47 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Oswald', sans-serif;
+    background-color: #2d3436;
+}
+
+app-root, #root, :host {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+main {
+    padding-top: 80px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+}
+
+.router-outlet-container {
+    width: 100%; 
+    max-width: 1600px; 
+    margin: 20px auto; 
+    padding: 20px; 
+    background-color: #3a3d42;
+    border-radius: 10px; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
+    color: #ffffff; 
+}
+
+router-outlet {
+    display: block;
+    width: 100%; 
+    height: auto; 
+}

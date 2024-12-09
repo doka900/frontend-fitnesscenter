@@ -1,0 +1,37 @@
+<div class="facility-card">
+  <a (click)="openVideoModal()" class="facility-image-link">
+    <img 
+      [src]="facility.image ? facility.image : defaultImage" 
+      alt="Slika objekta" 
+      class="facility-image img-thumbnail mb-2"
+    >
+  </a>
+
+
+  <div class="video-modal" *ngIf="isVideoModalOpen" (click)="closeVideoModal()">
+    <div class="video-container" (click)="$event.stopPropagation()"> 
+      <iframe 
+          *ngIf="isYouTubeLink(facility.calendarLink)" 
+          [src]="getEmbeddedUrl(facility.calendarLink) | safe" 
+          class="facility-video" 
+          frameborder="0" 
+          allow="autoplay; encrypted-media" 
+          allowfullscreen>
+      </iframe>
+      <button class="close-button" (click)="closeVideoModal()">X</button>
+    </div>
+  </div>
+
+  <div class="facility-info">
+    <h3 class="facility-type">{{facility.name}}</h3>
+    <h3 class="facility-type">{{ facility.facilityType }}</h3>
+    <div class="facility-location">
+      <p>Lokacija: {{ facility.country }}, {{ facility.city }}, {{facility.zipCode}}, {{facility.address }}</p>
+      <a href="tel:{{ facility.phoneNumber }}">Tel: {{ facility.phoneNumber }}</a><br>
+      <a href="mailto:{{ facility.email }}">Email: {{ facility.email }}</a>
+    </div>
+  </div>
+  <div class="button-container">
+    <a [routerLink]="['/facility', facility.id]" class="btn">Saznaj više</a> 
+  </div>
+</div>

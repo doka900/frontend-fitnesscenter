@@ -1,0 +1,39 @@
+<div class="facility-detail-container" *ngIf="facility">
+  <h2 class="facility-name">{{ facility.name }}</h2>
+  <div class="facility-detail">
+    <img *ngIf="facility.image" [src]="facility.image" alt="Slika objekta" class="facility-image">
+    <div class="facility-info">
+      
+      <p><strong>Naziv:</strong> {{ facility.name }}</p>
+      <p><strong>Tip:</strong> {{ facility.facilityType }}</p>
+      <p><strong>Adresa:</strong> {{ facility.address }}</p>
+      <p><strong>Grad:</strong> {{ facility.city }}</p>
+      <p><strong>Država:</strong> {{ facility.country }}</p>
+      <p><strong>Poštanski kod:</strong> {{ facility.zipCode }}</p>
+      <p><strong>Broj telefona:</strong> {{ facility.phoneNumber }}</p>
+      <p><strong>Email:</strong> {{ facility.email }}</p>
+      <p><strong>Video:</strong> <a [href]="facility.calendarLink" target="_blank"> Kliknite ovde!</a></p>
+      <br><span></span><br>
+    </div>
+  </div>
+
+  <h3 class="facility-spaces-title">Prostorije Objekta</h3>
+  <div *ngIf="facilitySpaces.length > 0" class="facility-spaces-container">
+    <div class="facility-spaces-grid">
+      <div *ngFor="let space of facilitySpaces" class="facility-space-card">
+        <img *ngIf="space.image; else noImage" [src]="space.image" alt="Slika prostorije objekta" class="facility-space-image">
+        <ng-template #noImage>
+          <img [src]="'assets/default-space-image.jpg'" alt="Podrazumevana slika prostorije objekta" class="facility-space-image">
+        </ng-template>
+        <div class="facility-space-info">
+          <p class="facility-space-name"><strong>Naziv:</strong> {{ space.name }}</p>
+          <p class="facility-space-capacity"><strong>Kapacitet:</strong> {{ space.capacity }}</p>
+          <p class="facility-space-type"><strong>Tip:</strong> {{ space.type || space.facilitySpaceType }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="facilitySpaces.length === 0" class="no-facility-spaces-message">
+    <p>Nema dostupnih prostorija u objektu.</p>
+  </div>
+</div>

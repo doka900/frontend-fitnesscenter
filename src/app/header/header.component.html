@@ -1,0 +1,27 @@
+<nav class="navbar">
+    <div class="logo">
+        <a href="/">Fitnes centar Spartacus</a>
+    </div>
+    <ul class="nav-links">
+        <li><a href="/home">Početna</a></li>
+        <li><a href="/programs-page">Programi</a></li>
+        <li><a href="/programs-schedule">Raspored Programa</a></li>
+        <li><a *ngIf="isLoggedIn()" href="/schedule">Vaš Raspored</a></li>
+     
+        <li *ngIf="isLoggedIn() && (isAdmin() || isUserTrainer)" class="dropdown">
+            <a href="javascript:void(0)" (click)="toggleDropdown()" class="dropdown-toggle">Administracija</a>
+            <ul class="dropdown-menu" [ngClass]="{ 'show': isDropdownOpen }">
+                <li *ngIf="!isUserTrainer"><a href="/facilities">Upravljanje Objektima</a></li>
+                <li><a href="/programs">Upravljanje Programima</a></li>
+                <li *ngIf="!isUserTrainer"><a href="/trainers">Upravljanje Trenerima</a></li>
+            </ul>
+        </li>
+    </ul>
+    <div class="auth">
+        <a *ngIf="!isLoggedIn()" href="/login">Prijava</a>
+        <a *ngIf="!isLoggedIn()" href="/sign-up" class="btn-signup">Registracija</a>
+        
+        <button *ngIf="isLoggedIn()" (click)="openProfile(username)" class="btn btn-info btn-sm">Profil</button>
+        <a *ngIf="isLoggedIn()" (click)="logout()">Odjava</a>
+    </div>
+</nav>

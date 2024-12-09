@@ -1,0 +1,34 @@
+
+.iframe-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; 
+    background-color: #2d3436; 
+    border: 2px solid #f05454; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); 
+    margin: 20px auto; 
+    max-width: 1000px; 
+  }
+  
+  
+  @media (max-width: 768px) {
+    .iframe-container {
+      padding: 10px;
+    }
+  
+    iframe {
+      height: 400px; 
+    }
+  }
+  
+  
+  iframe {
+    width: 100%;
+    height: 600px;
+    border: none; 
+    border-radius: 10px; 
+    background-color: #2d3436; 
+  }
+  

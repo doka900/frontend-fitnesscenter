@@ -1,0 +1,114 @@
+
+body {
+    font-family: 'Oswald', sans-serif; 
+    background-color: #2d3436; 
+    margin: 0;
+    padding: 20px;
+}
+
+
+.home-container {
+    width: 100%; 
+    max-width: 1400px; 
+    margin: 20px auto; 
+    padding: 20px; 
+    background-color: #3a3d42; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
+    color: #ffffff; 
+}
+
+
+h2 {
+    text-align: center; 
+    color: #f05454; 
+    margin-bottom: 30px; 
+    font-size: 2.5rem; 
+    font-weight: bold;
+    letter-spacing: 2px; 
+}
+
+
+.row {
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: space-evenly; 
+    gap: 30px; 
+}
+
+
+.facility-card {
+    background-color: #2d3436; 
+    border: 2px solid #f05454; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); 
+    width: calc(33% - 20px); 
+    min-width: 300px; 
+    max-width: 400px; 
+    text-align: center;
+    padding: 20px;
+    transition: transform 0.2s, box-shadow 0.2s; 
+    color: #ffffff; 
+    cursor: pointer;
+}
+
+
+.facility-card:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7); 
+}
+
+
+.facility-image-link {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.facility-image {
+    width: 100%;
+    height: 200px; 
+    object-fit: cover; 
+    border-radius: 10px;
+    transition: transform 0.3s, box-shadow 0.3s; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
+}
+
+.facility-image:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6); 
+}
+
+
+.facility-info {
+    margin-top: 15px;
+}
+
+.facility-type {
+    font-size: 1.7rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #f05454; 
+}
+
+.facility-location {
+    font-size: 1.2rem;
+    color: #dfe6e9; 
+}
+
+
+.facility-location p {
+    margin: 0; 
+}
+
+
+@media (max-width: 768px) {
+    .facility-card {
+        width: calc(50% - 20px); 
+    }
+}
+
+@media (max-width: 480px) {
+    .facility-card {
+        width: 100%; 
+    }
+}

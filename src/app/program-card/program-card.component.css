@@ -1,0 +1,337 @@
+
+.program-card {
+  background-color: #2d3436; 
+  border: 2px solid #f05454; 
+  border-radius: 10px; 
+  padding: 20px; 
+  text-align: center; 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); 
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+  color: #ffffff; 
+  width: 100%; 
+  max-width: 600px; 
+  min-height: 61vh; 
+  margin: 15px auto; 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: space-between; 
+}
+
+
+.button-container {
+  margin-top: auto; 
+  text-align: center; 
+}
+
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px; 
+  background-color: #f05454; 
+  color: white; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  text-decoration: none; 
+  transition: background-color 0.3s ease; 
+}
+
+.btn:hover {
+  background-color: #ff7675; 
+}
+
+
+
+.program-description-container {
+  max-height: 50px; 
+  overflow: hidden; 
+  transition: max-height 0.3s ease; 
+}
+
+
+.program-card:hover .program-description-container {
+  max-height: 200px; 
+  overflow: auto; 
+}
+
+
+.program-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+
+.program-image-link {
+  display: block;
+  margin-bottom: 15px;
+}
+
+.program-image {
+  width: 100%;
+  height: 200px; 
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.program-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+
+.program-info {
+  margin-top: 15px;
+  flex-grow: 1; 
+}
+
+.program-name {
+  font-size: 1.7rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #f05454;
+}
+
+.program-price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #00b894;
+  margin-top: 10px;
+}
+
+
+.button-container {
+  margin-top: auto; 
+  text-align: center; 
+}
+
+
+.btn-start-program {
+  background-color: #f05454;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 15px; 
+}
+
+.btn-start-program:hover {
+  background-color: #f77f7f; 
+}
+
+
+.expand-section {
+  text-align: center;
+  margin-top: 15px; 
+}
+
+.expand-btn {
+  padding: 10px 20px; 
+  font-size: 14px;
+  background-color: #f05454; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.expand-btn:hover {
+  background-color: #d94343; 
+}
+
+
+.occurrences-list {
+  margin-top: 10px;
+  list-style: none; 
+}
+
+.occurrences-list li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd; 
+}
+
+
+.btn-join {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #f05454; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-join:hover {
+  background-color: #f05454;
+}
+
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+
+.checkbox-container input[type="checkbox"] {
+  display: none;
+}
+
+
+.checkbox-container .custom-checkbox {
+  width: 25px;
+  height: 25px;
+  background-color: #fff;
+  border: 3px solid #f05454;
+  border-radius: 5px;
+  display: inline-block;
+  margin-right: 10px;
+  position: relative;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+
+.checkbox-container .custom-checkbox::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 15px;
+  border: solid #fff;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.3s ease;
+}
+
+
+.checkbox-container input[type="checkbox"]:checked + label .custom-checkbox {
+  background-color: #f05454;
+  border-color: #f05454;
+}
+
+
+.checkbox-container input[type="checkbox"]:checked + label .custom-checkbox::after {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+
+.checkbox-container:hover .custom-checkbox {
+  border-color: #f77f7f;
+}
+
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #f05454;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); 
+  z-index: 9999;
+  overflow-y: auto; 
+  padding: 20px;
+}
+
+
+.modal-content {
+  background-color: #2d3436; 
+  border-radius: 10px;
+  padding: 20px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh; 
+  overflow-y: auto; 
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); 
+  color: #ffffff;
+  position: relative; 
+}
+
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.close:hover {
+  color: #f05454; 
+}
+
+
+.modal-header, .modal-footer {
+  padding: 10px;
+}
+
+
+.modal-body {
+  max-height: calc(90vh - 120px); 
+  overflow-y: auto;
+}
+
+
+body.modal-open {
+  overflow: hidden;
+}
+
+
+.modal-footer .btn-primary {
+  background-color: #f05454; 
+  border: none;
+}
+
+.modal-footer .btn-primary:hover {
+  background-color: #ff6b6b; 
+}
+
+.modal-footer .btn-secondary {
+  background-color: #222831;
+  border: none;
+}
+
+.modal-footer .btn-secondary:hover {
+  background-color: #f05454; 
+}
+
+
+.modal {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.modal.show {
+  opacity: 1;
+}

@@ -1,0 +1,81 @@
+<div class="sign-up-container">
+  <h2>Registracija</h2>
+  <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+    
+    <div class="form-group">
+      <label for="username">Korisničko ime</label>
+      <input id="username" formControlName="username" type="text" required />
+      <div *ngIf="signUpForm.get('username')?.touched">
+        <small style="color: red;" *ngIf="signUpForm.get('username')?.errors?.['required']">Korisničko ime je obavezno.</small>
+        <small style="color: red;" *ngIf="signUpForm.get('username')?.errors?.['pattern']">Nevažeći karakteri u korisničkom imenu.</small>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="password">Lozinka</label>
+      <input id="password" formControlName="password" type="password" required />
+      <div *ngIf="signUpForm.get('password')?.touched">
+        <small style="color: red;" *ngIf="signUpForm.get('password')?.errors?.['required']">Lozinka je obavezna.</small>
+        <small style="color: red;" *ngIf="signUpForm.get('password')?.errors?.['minlength']">Lozinka mora imati najmanje 8 karaktera.</small>
+        <small style="color: red;" *ngIf="signUpForm.get('password')?.errors?.['pattern']">
+          Lozinka mora sadržati najmanje jedno veliko slovo, jedno malo slovo, jednu cifru i jedan specijalni karakter (npr., #, ?, !, &#64;, $).
+        </small>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" formControlName="email" type="email" required />
+      <div *ngIf="signUpForm.get('email')?.touched">
+        <small style="color: red;" *ngIf="signUpForm.get('email')?.errors?.['required']">Email je obavezan.</small>
+        <small style="color: red;" *ngIf="signUpForm.get('email')?.errors?.['email']">Nevažeći format email-a.</small>
+        <small style="color: red;" *ngIf="signUpForm.get('email')?.errors?.['pattern']">Nevažeći karakteri u email-u.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="dateOfBirth">Datum rođenja</label>
+      <input id="dateOfBirth" formControlName="dateOfBirth" type="date" required />
+      <div *ngIf="signUpForm.get('dateOfBirth')?.touched">
+        <small style="color: red;" *ngIf="signUpForm.get('dateOfBirth')?.errors?.['required']">Datum rođenja je obavezan.</small>
+        <small style="color: red;" *ngIf="signUpForm.get('dateOfBirth')?.errors?.['tooYoung']">Morate imati najmanje 13 godina da biste se registrovali.</small>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="name">Ime</label>
+      <input id="name" formControlName="name" type="text" required />
+      <div *ngIf="signUpForm.get('name')?.touched">
+        <small style="color: red;" *ngIf="signUpForm.get('name')?.errors?.['required']">Ime je obavezno.</small>
+        <small style="color: red;" *ngIf="signUpForm.get('name')?.errors?.['pattern']">Nevažeći karakteri u imenu.</small>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="surname">Prezime</label>
+      <input id="surname" formControlName="surname" type="text" required />
+      <div *ngIf="signUpForm.get('surname')?.touched">
+        <small style="color: red;" *ngIf="signUpForm.get('surname')?.errors?.['required']">Prezime je obavezno.</small>
+        <small style="color: red;" *ngIf="signUpForm.get('surname')?.errors?.['pattern']">Nevažeći karakteri u prezimenu.</small>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="display_name">Prikazano ime</label>
+      <input id="display_name" formControlName="display_name" type="text" required />
+      <div *ngIf="signUpForm.get('display_name')?.touched">
+        <small style="color: red;" *ngIf="signUpForm.get('display_name')?.errors?.['required']">Prikazano ime je obavezno.</small>
+        <small style="color: red;" *ngIf="signUpForm.get('display_name')?.errors?.['pattern']">Nevažeći karakteri u prikazanom imenu.</small>
+      </div>
+    </div>
+    
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+    
+    <div>Već imate nalog? 
+      <a href="/login">Kliknite ovde!</a></div>
+
+    <button type="submit" class="btn-submit" [disabled]="signUpForm.invalid">Registrujte se</button>
+  </form>
+</div>
